@@ -14,6 +14,9 @@ const teamsOfTournament_1 = require("../services/teamsOfTournament");
 const tournament_1 = require("../services/tournament");
 const addTournament = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const tournament = yield (0, tournament_1.createTournament)(req.body);
+    if (tournament instanceof Error) {
+        return next(tournament);
+    }
     return res.json(tournament);
 });
 exports.addTournament = addTournament;

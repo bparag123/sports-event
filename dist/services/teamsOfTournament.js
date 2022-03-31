@@ -16,6 +16,7 @@ exports.addTeamToTournament = void 0;
 const Teams_Of_Tournament_1 = __importDefault(require("../models/Teams_Of_Tournament"));
 const team_1 = require("./team");
 const tournament_1 = require("./tournament");
+//**Adding Participating Team in the Tournament */
 const addTeamToTournament = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const [tournament, team] = yield Promise.all([
         (0, tournament_1.findTournamentById)(data.tournament_id),

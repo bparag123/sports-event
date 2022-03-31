@@ -13,10 +13,10 @@ exports.getTeamOfGame = exports.createGame = void 0;
 const game_1 = require("../services/game");
 const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const game = yield (0, game_1.addGame)(req.body);
-    return res.json({
-        message: "Game Added",
-        game
-    });
+    if (game instanceof Error) {
+        return next(game);
+    }
+    return res.json(game);
 });
 exports.createGame = createGame;
 const getTeamOfGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

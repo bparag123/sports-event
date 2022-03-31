@@ -13,6 +13,9 @@ exports.getTeamOfCategory = exports.createCategory = void 0;
 const category_1 = require("../services/category");
 const createCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const category = yield (0, category_1.addCategory)(req.body);
+    if (category instanceof Error) {
+        return next(category);
+    }
     return res.json(category);
 });
 exports.createCategory = createCategory;

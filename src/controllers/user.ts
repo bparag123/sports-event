@@ -3,7 +3,10 @@ import { Request, Response, NextFunction } from 'express';
 import User from "../models/user";
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
-    const user:User = await addUser(req.body)
+    const user:User|Error = await addUser(req.body)
+    if(user instanceof Error){
+        return next(user)
+    }
     return res.json(user)
 }
 

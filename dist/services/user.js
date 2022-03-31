@@ -14,28 +14,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.removeUser = exports.findUserById = exports.addUser = void 0;
 const user_1 = __importDefault(require("../models/user"));
+/**This is a Service for the User Model Operations */
 const addUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_1.default.create(data);
+    try {
+        return yield user_1.default.create(data);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.addUser = addUser;
 const findUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_1.default.findByPk(id);
+    try {
+        return yield user_1.default.findByPk(id);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.findUserById = findUserById;
 const removeUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_1.default.destroy({
-        where: { id: id }
-    });
+    try {
+        return yield user_1.default.destroy({
+            where: { id: id }
+        });
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.removeUser = removeUser;
 const loginUser = (creadential) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(creadential);
     const user = yield user_1.default.findOne({
         where: {
             email: creadential.email
         }
     });
-    console.log(user);
     if (user === null) {
         return Promise.reject("User not found");
     }

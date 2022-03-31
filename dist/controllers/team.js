@@ -14,10 +14,10 @@ const team_1 = require("../services/team");
 const teamWithPlayer_1 = require("../services/teamWithPlayer");
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const team = yield (0, team_1.addTeam)(req.body);
-    return res.json({
-        message: "Team Added",
-        team
-    });
+    if (team instanceof Error) {
+        return next(team);
+    }
+    return res.json(team);
 });
 exports.createTeam = createTeam;
 const getTeamDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

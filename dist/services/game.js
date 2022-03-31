@@ -13,31 +13,50 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTeamsOfGame = exports.removeGame = exports.findGameById = exports.addGame = void 0;
+const category_1 = __importDefault(require("../models/category"));
 const game_1 = __importDefault(require("../models/game"));
 const team_1 = __importDefault(require("../models/team"));
+/**This is a Service for the Game Model Operations */
 const addGame = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield game_1.default.create(data);
+    try {
+        return yield game_1.default.create(data);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.addGame = addGame;
 const findGameById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield game_1.default.findByPk(id);
+    try {
+        return yield game_1.default.findByPk(id);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.findGameById = findGameById;
 const removeGame = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield game_1.default.destroy({
-        where: { id: id }
-    });
+    try {
+        return yield game_1.default.destroy({
+            where: { id: id }
+        });
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.removeGame = removeGame;
 const getTeamsOfGame = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const game = yield game_1.default.findAll({
+    const game = yield team_1.default.findAll({
         where: {
-            id: id
+            game_id: id
         },
-        include: {
-            model: team_1.default,
-            attributes: ["name", "id", "category"]
-        }
+        //**Joining the Game and Category model with Team */
+        include: [
+            { model: game_1.default, attributes: ["id", "name"] },
+            { model: category_1.default, attributes: ["id", "name"] }
+        ],
+        attributes: ["id", "name", "createdAt", "updatedAt"]
     });
     return game;
 });

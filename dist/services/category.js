@@ -16,11 +16,21 @@ exports.getTeamsOfCategory = exports.removeCategory = exports.findCategoryById =
 const category_1 = __importDefault(require("../models/category"));
 const team_1 = __importDefault(require("../models/team"));
 const addCategory = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.default.create(data);
+    try {
+        return yield category_1.default.create(data);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.addCategory = addCategory;
 const findCategoryById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.default.findByPk(id);
+    try {
+        return yield category_1.default.findByPk(id);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.findCategoryById = findCategoryById;
 const removeCategory = (id) => __awaiter(void 0, void 0, void 0, function* () {

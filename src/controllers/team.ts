@@ -3,7 +3,10 @@ import Team from '../models/team';
 import {addTeam, getTeamData } from '../services/team';
 import { addPlayerToTeam, removePlayer , } from '../services/teamWithPlayer';
 export const createTeam = async (req: Request, res: Response, next: NextFunction) => {
-    const team:Team = await addTeam(req.body)
+    const team:Team|Error = await addTeam(req.body)
+    if(team instanceof Error){
+        return next(team)
+    }
     return res.json(team)
 }
 

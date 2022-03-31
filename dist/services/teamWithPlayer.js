@@ -16,6 +16,7 @@ exports.removePlayer = exports.addPlayerToTeam = void 0;
 const Team_With_Player_1 = __importDefault(require("../models/Team_With_Player"));
 const team_1 = require("./team");
 const user_1 = require("./user");
+//**Registering Player With Team */
 const addPlayerToTeam = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const [team, player] = yield Promise.all([
         (0, team_1.findTeamById)(data.team_id),

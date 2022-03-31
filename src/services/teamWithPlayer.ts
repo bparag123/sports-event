@@ -2,6 +2,7 @@ import TeamWithPlayer, { TWPBody } from "../models/Team_With_Player"
 import { findTeamById } from "./team"
 import { findUserById } from "./user"
 
+//**Registering Player With Team */
 export const addPlayerToTeam = async (data: TWPBody) => {
     const [team, player] = await Promise.all([
         findTeamById(data.team_id),

@@ -2,14 +2,22 @@ import Category from "../models/category";
 import Game from "../models/game";
 import Team, { teamBody } from "../models/team"
 import User from "../models/user"
+/**This is a Service for the Team Model Operations */
 
 export const addTeam = async (data: teamBody) => {
-    console.log(data);
-    return await Team.create(data)
+    try {
+        return await Team.create(data)
+    } catch (error:any) {
+        return new Error(error.errors[0].message)
+    }
 }
 
 export const findTeamById = async (id: string) => {
-    return await Team.findByPk(id)
+    try {
+        return await Team.findByPk(id)
+    } catch (error:any) {
+        return new Error(error.errors[0].message)
+    }
 }
 
 export const removeTeam = async (id: string) => {
@@ -25,6 +33,7 @@ export const getTeamData = async (id: string) => {
         where: {
             id: id
         },
+        //**Joining the User, Game, Category with Team Table */
         include: [
             {
                 model: User, attributes: ["email", "id"],

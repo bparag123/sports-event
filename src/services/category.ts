@@ -2,11 +2,19 @@ import Category, { categoryBody } from "../models/category"
 import Team from "../models/team"
 
 export const addCategory = async (data: categoryBody) => {
-    return await Category.create(data)
+    try {
+        return await Category.create(data)
+    } catch (error:any) {
+        return new Error(error.errors[0].message)
+    }
 }
 
 export const findCategoryById = async (id: string) => {
-    return await Category.findByPk(id)
+    try {
+        return await Category.findByPk(id)
+    } catch (error:any) {
+        return new Error(error.errors[0].message)
+    }
 }
 
 export const removeCategory = async (id: string) => {

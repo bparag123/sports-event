@@ -10,6 +10,7 @@ export interface TWPAttributes {
     
 }
 
+//This is input interface for adding player to team
 export interface TWPBody extends Optional<TWPAttributes, 'id'> {}
 
 class TeamWithPlayer extends Model<TWPAttributes, TWPBody> implements TWPAttributes {
@@ -23,7 +24,7 @@ TeamWithPlayer.init({
         defaultValue: UUIDV4,
         primaryKey: true
     },
-    
+    //**Combination of team and player ids should be unique */
     team_id:{
         type: DataTypes.UUID,
         references:{

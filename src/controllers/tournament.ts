@@ -4,7 +4,10 @@ import { addTeamToTournament } from '../services/teamsOfTournament';
 import { createTournament, getTournamentData } from '../services/tournament';
 
 export const addTournament = async (req: Request, res: Response, next: NextFunction) => {
-    const tournament:Tournament = await createTournament(req.body)
+    const tournament:Tournament|Error = await createTournament(req.body)
+    if(tournament instanceof Error){
+        return next(tournament)
+    }
     return res.json(tournament)
 }
 

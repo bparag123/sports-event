@@ -13,6 +13,9 @@ exports.login = exports.signUp = void 0;
 const user_1 = require("../services/user");
 const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield (0, user_1.addUser)(req.body);
+    if (user instanceof Error) {
+        return next(user);
+    }
     return res.json(user);
 });
 exports.signUp = signUp;

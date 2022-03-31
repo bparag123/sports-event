@@ -13,15 +13,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTeamData = exports.removeTeam = exports.findTeamById = exports.addTeam = void 0;
+const category_1 = __importDefault(require("../models/category"));
+const game_1 = __importDefault(require("../models/game"));
 const team_1 = __importDefault(require("../models/team"));
 const user_1 = __importDefault(require("../models/user"));
+/**This is a Service for the Team Model Operations */
 const addTeam = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(data);
-    return yield team_1.default.create(data);
+    try {
+        return yield team_1.default.create(data);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.addTeam = addTeam;
 const findTeamById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield team_1.default.findByPk(id);
+    try {
+        return yield team_1.default.findByPk(id);
+    }
+    catch (error) {
+        return new Error(error.errors[0].message);
+    }
 });
 exports.findTeamById = findTeamById;
 const removeTeam = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,13 +47,18 @@ const getTeamData = (id) => __awaiter(void 0, void 0, void 0, function* () {
         where: {
             id: id
         },
-        include: {
-            model: user_1.default,
-            attributes: ["email"],
-            through: {
-                attributes: []
-            }
-        }
+        //**Joining the User, Game, Category with Team Table */
+        include: [
+            {
+                model: user_1.default, attributes: ["email", "id"],
+                through: {
+                    attributes: []
+                }
+            },
+            { model: game_1.default, attributes: ["id", "name"] },
+            { model: category_1.default, attributes: ["id", "name"] }
+        ],
+        attributes: ["id", "name"]
     });
     return team;
 });

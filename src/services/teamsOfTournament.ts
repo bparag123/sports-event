@@ -2,6 +2,7 @@ import TeamsOfTournament, { TOTBody } from "../models/Teams_Of_Tournament"
 import { findTeamById } from "./team"
 import { findTournamentById } from "./tournament"
 
+//**Adding Participating Team in the Tournament */
 export const addTeamToTournament = async (data: TOTBody) => {
     const [tournament, team] = await Promise.all([
         findTournamentById(data.tournament_id),

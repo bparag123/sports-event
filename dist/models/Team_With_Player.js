@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const _1 = __importDefault(require("."));
-const player_1 = __importDefault(require("./player"));
 const team_1 = __importDefault(require("./team"));
+const user_1 = __importDefault(require("./user"));
 class TeamWithPlayer extends sequelize_1.Model {
 }
 TeamWithPlayer.init({
@@ -15,6 +15,7 @@ TeamWithPlayer.init({
         defaultValue: sequelize_1.UUIDV4,
         primaryKey: true
     },
+    //**Combination of team and player ids should be unique */
     team_id: {
         type: sequelize_1.DataTypes.UUID,
         references: {
@@ -26,7 +27,7 @@ TeamWithPlayer.init({
     player_id: {
         type: sequelize_1.DataTypes.UUID,
         references: {
-            model: player_1.default,
+            model: user_1.default,
             key: "id"
         },
         unique: "playerWithTeam"
